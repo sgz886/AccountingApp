@@ -1,4 +1,4 @@
-package com.su.accounting.model;
+package com.su.accounting.model.web;
 
 public class Greeting {
     private final Long id;

@@ -1,11 +1,13 @@
 package com.su.accounting.controller;
 
 import com.su.accounting.converter.ServiceToWeb.ServiceToWebConverter;
+import com.su.accounting.exception.InvalidParameterException;
 import com.su.accounting.manager.UserInfoManager;
 import com.su.accounting.model.web.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +32,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserInfo getUserInfoByUserId(@PathVariable("id") Long userId) {
+    public ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") Long userId) {
         log.debug("Get user info by user id {}", userId);
 
+        if (userId == null || userId <= 0L) {
+            throw new InvalidParameterException(String.format("userId %s is invalid",userId));
+        }
         val userInfo = userInfoManager.getUserInfoByUserId(userId);
-        return serviceToWebConverter.convert(userInfo);
+        return ResponseEntity.ok(serviceToWebConverter.convert(userInfo));
+
     }
 }

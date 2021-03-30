@@ -1,13 +1,13 @@
 package com.su.accounting.dao;
 
-import com.su.accounting.model.persistence.UserInfo;
+import com.su.accounting.entity.persistence.UserInfo;
 
 public interface UserInfoDAO {
     /**
      * Get user information by user id.
      * @param userId the specific user id.
      */
-    UserInfo getUserInfoById(Long userId);
+    UserInfo getUserInfoByUserId(Long userId);
 
     /**
      * create new user

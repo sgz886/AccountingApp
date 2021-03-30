@@ -1,4 +1,4 @@
-package com.su.accounting.model.service;
+package com.su.accounting.entity.service;
 
 import lombok.Builder;
 import lombok.Data;

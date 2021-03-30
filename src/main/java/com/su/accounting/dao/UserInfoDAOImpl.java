@@ -1,7 +1,7 @@
 package com.su.accounting.dao;
 
 import com.su.accounting.dao.mapper.UserInfoMapper;
-import com.su.accounting.model.persistence.UserInfo;
+import com.su.accounting.entity.persistence.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public class UserInfoDAOImpl implements UserInfoDAO {
     }
 
     @Override
-    public UserInfo getUserInfoById(Long userId) {
+    public UserInfo getUserInfoByUserId(Long userId) {
         return userInfoMapper.getUserInfoByUserId(userId);
     }
 

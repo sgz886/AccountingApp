@@ -1,4 +1,4 @@
-package com.su.accounting.model.persistence;
+package com.su.accounting.entity.persistence;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
+public class  UserInfo {
     private Long id;
     private String username;
     private String password;

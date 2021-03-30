@@ -2,8 +2,8 @@ package com.su.accounting.controller;
 
 import com.su.accounting.converter.ServiceToWeb.ServiceToWebConverter;
 import com.su.accounting.exception.InvalidParameterException;
-import com.su.accounting.manager.UserInfoManager;
-import com.su.accounting.model.web.UserInfo;
+import com.su.accounting.service.UserInfoService;
+import com.su.accounting.entity.web.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/v1.0/users")
 @Slf4j
-// hostname:port/v1/users/...
+// hostname:port/v1.0/users/...
 public class UserController {
     // 1.not too many logic
     // 2.param verification ASAP
 
-    private final UserInfoManager userInfoManager;
+    private final UserInfoService userInfoService;
     private final ServiceToWebConverter serviceToWebConverter;
 
     @Autowired
-    public UserController(final UserInfoManager userInfoManager,
+    public UserController(final UserInfoService userInfoService,
                           final ServiceToWebConverter serviceToWebConverter) {
-        this.userInfoManager = userInfoManager;
+        this.userInfoService = userInfoService;
         this.serviceToWebConverter = serviceToWebConverter;
     }
 
@@ -38,7 +38,7 @@ public class UserController {
         if (userId == null || userId <= 0L) {
             throw new InvalidParameterException(String.format("userId %s is invalid",userId));
         }
-        val userInfo = userInfoManager.getUserInfoByUserId(userId);
+        val userInfo = userInfoService.getUserInfoByUserId(userId);
         return ResponseEntity.ok(serviceToWebConverter.convert(userInfo));
 
     }

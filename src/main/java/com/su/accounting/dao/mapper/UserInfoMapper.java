@@ -1,6 +1,6 @@
 package com.su.accounting.dao.mapper;
 
-import com.su.accounting.model.persistence.UserInfo;
+import com.su.accounting.entity.persistence.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

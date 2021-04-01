@@ -1,9 +1,17 @@
 package com.su.accounting.service;
 
-import com.su.accounting.converter.PersistToService.PersisToServiceConverter;
-import com.su.accounting.dao.UserInfoDAO;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.openMocks;
+
+import com.su.accounting.converter.persist2service.PersisToServiceConverter;
+import com.su.accounting.dao.UserInfoDao;
 import com.su.accounting.entity.persistence.UserInfo;
 import com.su.accounting.exception.ResourceNotFoundException;
+
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,14 +19,9 @@ import org.mockito.Mock;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.openMocks;
-
 class UserInfoServiceTest {
     UserInfoService userInfoService;
-    @Mock UserInfoDAO mockDao;
+    @Mock UserInfoDao mockDao;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -35,11 +38,11 @@ class UserInfoServiceTest {
         val createTime = LocalDate.now();
 
         val userInfo = UserInfo.builder()
-                               .id(userId)
-                               .username(username)
-                               .password(password)
-                               .createTime(createTime)
-                               .build();
+                           .id(userId)
+                           .username(username)
+                           .password(password)
+                           .createTime(createTime)
+                           .build();
         doReturn(userInfo).when(mockDao).getUserInfoByUserId(userId);
 
         // act
@@ -51,10 +54,10 @@ class UserInfoServiceTest {
 
         // assertj
         assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("id", userId)
-                .hasFieldOrPropertyWithValue("username", username)
-                .hasFieldOrPropertyWithValue("password", password);
-        verify(mockDao,times(1)).getUserInfoByUserId(userId);
+            .hasFieldOrPropertyWithValue("id", userId)
+            .hasFieldOrPropertyWithValue("username", username)
+            .hasFieldOrPropertyWithValue("password", password);
+        verify(mockDao, times(1)).getUserInfoByUserId(userId);
     }
 
     @Test
@@ -63,8 +66,8 @@ class UserInfoServiceTest {
         val userId = -1L;
         doReturn(null).when(mockDao).getUserInfoByUserId(userId);
         // act and assert
-        assertThrows(ResourceNotFoundException.class
-                , () -> userInfoService.getUserInfoByUserId(userId));
+        assertThrows(ResourceNotFoundException.class,
+            () -> userInfoService.getUserInfoByUserId(userId));
         verify(mockDao).getUserInfoByUserId(userId);
     }
 

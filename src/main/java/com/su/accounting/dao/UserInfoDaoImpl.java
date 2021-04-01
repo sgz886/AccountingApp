@@ -2,15 +2,19 @@ package com.su.accounting.dao;
 
 import com.su.accounting.dao.mapper.UserInfoMapper;
 import com.su.accounting.entity.persistence.UserInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * UserInfoDaoImpl.
+ */
 @Repository
-public class UserInfoDAOImpl implements UserInfoDAO {
+public class UserInfoDaoImpl implements UserInfoDao {
     private final UserInfoMapper userInfoMapper;
 
     @Autowired
-    public UserInfoDAOImpl(UserInfoMapper userInfoMapper) {
+    public UserInfoDaoImpl(UserInfoMapper userInfoMapper) {
         this.userInfoMapper = userInfoMapper;
     }
 

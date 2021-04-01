@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * entity/persistence/UserInfo.
+ */
 @Data
 @Builder
 @NoArgsConstructor

@@ -1,14 +1,18 @@
 package com.su.accounting.converter;
 
-import com.su.accounting.converter.PersistToService.PersisToServiceConverter;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import com.su.accounting.converter.persist2service.PersisToServiceConverter;
 import com.su.accounting.entity.persistence.UserInfo;
+
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+/**
+ * PersisToServiceConverterTest.
+ */
 public class PersisToServiceConverterTest {
     PersisToServiceConverter converter = new PersisToServiceConverter();
 
@@ -34,6 +38,7 @@ public class PersisToServiceConverterTest {
                 .hasFieldOrPropertyWithValue("username", username)
                 .hasFieldOrPropertyWithValue("password", password);
     }
+
     @Test
     void testDoBackward() {
         //arrange

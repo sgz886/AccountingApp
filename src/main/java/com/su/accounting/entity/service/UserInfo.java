@@ -3,6 +3,9 @@ package com.su.accounting.entity.service;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * entity/service/UserInfo.
+ */
 @Data
 @Builder
 public class UserInfo {

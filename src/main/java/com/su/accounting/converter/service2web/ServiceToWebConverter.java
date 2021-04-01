@@ -1,10 +1,14 @@
-package com.su.accounting.converter.ServiceToWeb;
+package com.su.accounting.converter.service2web;
+
+import com.su.accounting.entity.web.UserInfo;
 
 import com.google.common.base.Converter;
-import com.su.accounting.entity.web.UserInfo;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ *  ServiceToWebConverter.
+ */
 @Component
 @NoArgsConstructor
 public class ServiceToWebConverter extends Converter<com.su.accounting.entity.service.UserInfo, UserInfo> {

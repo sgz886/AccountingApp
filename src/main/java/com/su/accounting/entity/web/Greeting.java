@@ -1,5 +1,8 @@
 package com.su.accounting.entity.web;
 
+/**
+ * a entity used by helloController.
+ */
 public class Greeting {
     private final Long id;
     private String name;

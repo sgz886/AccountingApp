@@ -1,12 +1,16 @@
 package com.su.accounting.converter;
 
-import com.su.accounting.converter.ServiceToWeb.ServiceToWebConverter;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import com.su.accounting.converter.service2web.ServiceToWebConverter;
 import com.su.accounting.entity.service.UserInfo;
+
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+/**
+ * ServiceToWebConverterTest.
+ */
 public class ServiceToWebConverterTest {
     ServiceToWebConverter converter = new ServiceToWebConverter();
 
@@ -17,17 +21,18 @@ public class ServiceToWebConverterTest {
         val username = "df";
         val password = "werere";
         UserInfo userInfoService = UserInfo.builder()
-                                         .id(userId)
-                                         .username(username)
-                                         .build();
+                                       .id(userId)
+                                       .username(username)
+                                       .build();
         //act
         val result = converter.convert(userInfoService);
 
         //assert
         assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("id", userId)
-                .hasFieldOrPropertyWithValue("username", username);
+            .hasFieldOrPropertyWithValue("id", userId)
+            .hasFieldOrPropertyWithValue("username", username);
     }
+
     @Test
     void testDoBackward() {
         //arrange
@@ -35,17 +40,17 @@ public class ServiceToWebConverterTest {
         val username = "df";
         val password = "werere";
         val userInfoWeb = com.su.accounting.entity.web.UserInfo.builder()
-                                      .id(userId)
-                                      .username(username)
-                                      .password(password)
-                                      .build();
+                              .id(userId)
+                              .username(username)
+                              .password(password)
+                              .build();
         //act
         val result = converter.reverse().convert(userInfoWeb);
 
         //assert
         assertThat(result).isNotNull()
-                .hasFieldOrPropertyWithValue("id", userId)
-                .hasFieldOrPropertyWithValue("username", username)
-                .hasFieldOrPropertyWithValue("password", password);
+            .hasFieldOrPropertyWithValue("id", userId)
+            .hasFieldOrPropertyWithValue("username", username)
+            .hasFieldOrPropertyWithValue("password", password);
     }
 }

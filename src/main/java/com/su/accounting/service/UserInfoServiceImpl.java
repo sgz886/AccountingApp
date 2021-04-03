@@ -5,7 +5,6 @@ import com.su.accounting.dao.UserInfoDao;
 import com.su.accounting.entity.service.UserInfo;
 import com.su.accounting.exception.ResourceNotFoundException;
 
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +26,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo getUserInfoByUserId(Long userId) {
-        val userInfo = Optional.ofNullable(userInfoDao.getUserInfoByUserId(userId))
-                           .orElseThrow(() -> new ResourceNotFoundException(String.format("user %s was not found", userId)));
-        return persisToServiceConverter.convert(userInfo);
+        return Optional.ofNullable(userInfoDao.getUserInfoByUserId(userId)).map(persisToServiceConverter::convert)
+                   .orElseThrow(() -> new ResourceNotFoundException(String.format("user %s was not found", userId)));
     }
 }

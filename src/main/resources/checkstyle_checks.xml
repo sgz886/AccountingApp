@@ -266,7 +266,7 @@
             <property name="separateLineBetweenGroups" value="true"/>
             <property name="customImportOrderRules" value="STATIC###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE###STANDARD_JAVA_PACKAGE"/>
             <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>
-            <property name="specialImportsRegExp" value="^(com.su)"/>
+            <property name="specialImportsRegExp" value="^(com\.su\.)"/>
             <property name="standardPackageRegExp" value="^(java|javax)\."/>
         </module>
         <module name="MethodParamPad">

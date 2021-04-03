@@ -3,6 +3,7 @@ package com.su.accounting.controller;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,14 +32,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  */
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
+    @InjectMocks UserController userController;
     MockMvc mockMvc;
     @Mock UserInfoServiceImpl mockService;
     @Mock ServiceToWebConverter mockConverter;
-    @InjectMocks UserController userController;
 
     @BeforeEach
     void setup() {
-        Object[] controllers;
         mockMvc = MockMvcBuilders.standaloneSetup(userController)
                       .setControllerAdvice(new GlobalExceptionHandler())
                       .build();
@@ -52,7 +53,7 @@ public class UserControllerTest {
     @Test
     void testUserController() throws Exception {
         // arrange
-        val userId = 1L;
+        Long userId = 1L;
         val username = "accounting_admin";
         val password = "accounting";
 
@@ -79,15 +80,17 @@ public class UserControllerTest {
     @Test
     void testUserControllerWithInvalidUserId() throws Exception {
         // arranges
-        val userId = -100L;
+        Long userId = -100L;
         doThrow(new InvalidParameterException(String.format("user %s was not found", userId)))
             .when(mockService)
-            .getUserInfoByUserId(anyLong());
+            .getUserInfoByUserId(ArgumentMatchers.longThat(argument -> argument <= 0));
         // act  assert
         mockMvc.perform(get("/v1.0/users/" + userId))
             .andExpect(status().is4xxClientError())
             .andExpect(content().contentType("application/json"))
             .andExpect(content().string(
                 "{\"code\":\"INVALID_PARAMETER\",\"errorType\":\"Client\",\"message\":\"userId -100 is invalid\",\"statusCode\":400}"));
+        verify(mockService, never()).getUserInfoByUserId(anyLong());
+
     }
 }

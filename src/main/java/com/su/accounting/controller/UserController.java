@@ -5,6 +5,7 @@ import com.su.accounting.entity.web.UserInfo;
 import com.su.accounting.exception.InvalidParameterException;
 import com.su.accounting.service.UserInfoService;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * the controller that returns a json file {id , username} to frontend.
@@ -43,11 +46,12 @@ public class UserController {
      * @param userId user id
      * @return entity/web/UserInfo object, or throw exception
      */
+    @SuppressFBWarnings
     @GetMapping("/{id}")
-    public ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") Long userId) {
+    public ResponseEntity<UserInfo> getUserInfoByUserId(@PathVariable("id") @NotNull Long userId) {
         log.debug("Get user info by user id {}", userId);
 
-        if (userId == null || userId <= 0L) {
+        if (userId <= 0L) {
             throw new InvalidParameterException(String.format("userId %s is invalid", userId));
         }
         val userInfo = userInfoService.getUserInfoByUserId(userId);
